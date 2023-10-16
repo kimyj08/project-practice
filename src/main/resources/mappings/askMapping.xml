@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="Ask">
+
+	<insert id="insertBAsk" parameterType="ask">
+	<![CDATA[
+		insert into ask(a_no,a_title,a_content,um_no,bm_no,a_pmm,a_status) values((select nvl(max(a_no),0)+1 from ask), #{a_title}, #{a_content}, #{um_no}, #{bm_no}, #{a_pmm}, '1')
+	]]>
+	</insert>
+	
+	<insert id="insertUAsk" parameterType="ask">
+	<![CDATA[
+		insert into ask(a_no,a_title,a_content,um_no,bm_no,a_status) values((select nvl(max(a_no),0)+1 from ask), #{a_title}, #{a_content}, #{um_no}, #{bm_no}, '1')
+	]]>
+	</insert>
+	
+	<insert id="insertUAskP" parameterType="ask">
+	<![CDATA[
+		insert into ask(a_no,a_title,a_content,um_no,a_pmm,a_status) values((select nvl(max(a_no),0)+1 from ask), #{a_title}, #{a_content}, #{um_no}, #{a_pmm}, '1')
+	]]>
+	</insert>
+	
+	<select id="getBAskList" resultType="ask">
+	
+		select a.a_no
+			 , a.a_title
+			 , a.a_content
+			 , a.um_no
+			 , a.bm_no
+			 , a.a_pmm
+			 , a.a_date
+			 , decode(a.a_status, '1', '작성됨', '2', '수정됨', '3', '답변됨') as a_status
+			 , a.ar_no
+			 , u.name as name_1
+		  from ask a
+		     , users u
+		where 1 = 1
+		  and a.um_no = u.seq
+		<!-- 브랜드 세션으로 로그인 된 경우일 때 조회되도록. -->
+			<if test="bm_no != null and searchCondition == 'TITLE'">
+				and a.a_title like '%'||#{searchKeyword}||'%'
+			</if>
+			<if test="bm_no != null and searchCondition == 'CONTENT'">
+				and a.a_content like '%'||#{searchKeyword}||'%'
+			</if>
+			and a.bm_no = ${bm_no}
+			and a.a_status not in ('0')
+		
+		union all
+		
+		select a.a_no
+			 , a.a_title
+			 , a.a_content
+			 , a.um_no
+			 , a.bm_no
+			 , a.a_pmm
+			 , a.a_date
+			 , decode(a.a_status, '1', '작성됨', '2', '수정됨', '3', '답변됨') as a_status
+			 , a.ar_no
+			 , u.name as name_1
+		  from ask a
+		     , users u
+		where 1 = 1
+		  and a.bm_no = u.seq
+		<!-- 브랜드 세션으로 로그인 된 경우일 때 조회되도록. -->
+			<if test="bm_no != null and searchCondition == 'TITLE'">
+				and a.a_title like '%'||#{searchKeyword}||'%'
+			</if>
+			<if test="bm_no != null and searchCondition == 'CONTENT'">
+				and a.a_content like '%'||#{searchKeyword}||'%'
+			</if>
+			and a.bm_no = ${bm_no}
+			and a.a_pmm is not null
+			and a.a_status not in ('0')
+		order by a_no desc
+	
+	</select>
+	
+	<select id="getUAskList" resultType="ask">
+	
+		select a.a_no
+			 , a.a_title
+			 , a.a_content
+			 , a.um_no
+			 , a.bm_no
+			 , a.a_pmm
+			 , a.a_date
+			 , decode(a.a_status, '1', '작성됨', '2', '수정됨', '3', '답변됨') as a_status
+			 , a.ar_no 
+			 , u.name as name_1
+		  from ask a
+		  	 , users u
+		 where 1 = 1
+		   and a.um_no = u.seq
+		<!-- 유저 세션으로 로그인 된 경우일 때 조회되도록. -->
+			<if test="um_no != null and searchCondition == 'TITLE'">
+				and a.a_title like '%'||#{searchKeyword}||'%'
+			</if>
+			<if test="um_no != null and searchCondition == 'CONTENT'">
+				and a.a_content like '%'||#{searchKeyword}||'%'
+			</if>
+			and a.um_no = ${um_no}
+			and a.um_no is not null
+			and a.a_status not in ('0')
+		order by a.a_no desc
+	
+	</select>
+	
+	<select id="getPAskList" resultType="ask">
+	
+		select a.a_no
+			 , a.a_title
+			 , a.a_content
+			 , a.um_no
+			 , a.bm_no
+			 , a.a_pmm
+			 , a.a_date
+			 , decode(a.a_status, '1', '작성됨', '2', '수정됨', '3', '답변됨') as a_status
+			 , a.ar_no
+			 , b.name as name_1
+			 , c.name as name_2
+		  from ask a
+		  	 , users b
+		  	 , users c
+		 where 1 = 1
+		   and a.um_no = b.seq
+		   and a.bm_no = c.seq
+		<!-- 여기에 관리자인지 아닌지 확인하는 조건이 들어와야 함. -->
+			<if test="a_pmm != null and searchCondition == 'TITLE'">
+				and a.a_title like '%'||#{searchKeyword}||'%'
+			</if>
+			<if test="a_pmm != null and searchCondition == 'CONTENT'">
+				and a.a_content like '%'||#{searchKeyword}||'%'
+			</if>
+			and a.um_no is not null
+			and a.bm_no is not null
+			and a.a_status not in ('0')
+		
+		union all
+		
+		select a.a_no
+			 , a.a_title
+			 , a.a_content
+			 , a.um_no
+			 , a.bm_no
+			 , a.a_pmm
+			 , a.a_date
+			 , decode(a.a_status, '1', '작성됨', '2', '수정됨', '3', '답변됨') as a_status
+			 , a.ar_no
+			 , b.name as name_1
+			 , c.name as name_2
+		  from ask a
+		  	 , users b
+		  	 , users c
+		 where 1 = 1
+		   and a.um_no = b.seq
+		   and a.a_pmm = c.seq
+		<!-- 여기에 관리자인지 아닌지 확인하는 조건이 들어와야 함. -->
+			<if test="a_pmm != null and searchCondition == 'TITLE'">
+				and a.a_title like '%'||#{searchKeyword}||'%'
+			</if>
+			<if test="a_pmm != null and searchCondition == 'CONTENT'">
+				and a.a_content like '%'||#{searchKeyword}||'%'
+			</if>
+			and a.um_no is not null
+			and a.a_pmm is not null
+			and a.a_status not in ('0')
+		
+		union all
+		
+		select a.a_no
+			 , a.a_title
+			 , a.a_content
+			 , a.um_no
+			 , a.bm_no
+			 , a.a_pmm
+			 , a.a_date
+			 , decode(a.a_status, '1', '작성됨', '2', '수정됨', '3', '답변됨') as a_status
+			 , a.ar_no
+			 , b.name as name_1
+			 , c.name as name_2
+		  from ask a
+		  	 , users b
+		  	 , users c
+		 where 1 = 1
+		   and a.bm_no = b.seq
+		   and a.a_pmm = c.seq
+		<!-- 여기에 관리자인지 아닌지 확인하는 조건이 들어와야 함. -->
+			<if test="a_pmm != null and searchCondition == 'TITLE'">
+				and a.a_title like '%'||#{searchKeyword}||'%'
+			</if>
+			<if test="a_pmm != null and searchCondition == 'CONTENT'">
+				and a.a_content like '%'||#{searchKeyword}||'%'
+			</if>
+			and a.bm_no is not null
+			and a.a_pmm is not null
+			and a.a_status not in ('0')
+		order by a_no desc
+	
+	</select>
+	
+	<!-- 
+	<select id="getAskList" resultType="ask">
+	
+		select * from ask where 1 = 1
+		<if test="um_no != null">
+			and um_no = #{um_no}
+		</if>
+		<if test="a_pmm != null">
+			and bm_no = #{bm_no}
+		</if>
+		order by a_no desc
+	
+	</select> 
+	-->
+	
+	<select id="getAsk" resultType="ask">
+		select a.a_no
+			 , a.a_title
+			 , a.a_content
+			 , a.um_no
+			 , a.bm_no
+			 , a.a_pmm
+			 , a.a_date
+			 , decode(a.a_status, '1', '작성됨', '2', '수정됨', '3', '답변됨') as a_status
+			 , a.ar_no
+			 , b.name as name_1
+			 , c.name as name_2
+		  from ask a
+		  	 , users b <!-- 작성자 이름 조회용 -->
+		  	 , users c <!-- 수신자 이름 조회용 -->
+		 where 1 = 1
+		  <if test="um_no == null || um_no == ''">
+		   and a.bm_no = b.seq
+		   and a.a_pmm = c.seq
+		  </if>
+		  <if test="bm_no == null || bm_no == ''">
+		   and a.um_no = b.seq
+		   and a.a_pmm = c.seq
+		  </if>
+		  <if test="a_pmm == null || a_pmm == ''">
+		   and a.um_no = b.seq
+		   and a.bm_no = c.seq
+		  </if>
+		   and a.a_no = #{a_no}
+	</select>
+	
+	<update id="updateAsk">
+	<![CDATA[
+		update ask set a_title = #{a_title}, a_content = #{a_content}, a_status = '2' where a_no = #{a_no}
+	]]>
+	</update>
+	
+	<update id="deleteAsk">
+	<![CDATA[
+		update ask set a_status = '0' where a_no = #{a_no}
+	]]>
+	</update>
+	
+	<select id="getBrandList" resultType="map">
+	<![CDATA[
+		select seq
+			 , name
+		  from users
+		 where 1 = 1
+		   and role = 'Brand'
+	]]>
+	</select>
+	
+</mapper>  
+
+<!-- ' <![CDATA[ sql query문 ]]> ' : sql query안의 연산자를 elements로 인식하지 않도록 붙여줘야 하는 것. -->
+  
