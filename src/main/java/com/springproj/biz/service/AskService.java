@@ -19,6 +19,8 @@ public interface AskService {
 	public List<AskVO> getServicePList(AskVO vo);
 	// 글 수정
 	public void updateService(AskVO vo);
+	// 조회수 증가
+	public void updateCntService(int a_no);
 	// 글 삭제
 	public void deleteService(int a_no);
 	// 브랜드 리스트 조회

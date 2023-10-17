@@ -106,6 +106,8 @@ public class AskController {
 		System.out.println(ask.getBm_no());
 		System.out.println(ask.getA_pmm());
 		
+		askService.updateCntService(ask.getA_no());
+		
 		AskVO vo = askService.getService(ask);
 		
 		List<AskRvVO> list = arService.getServiceList(""+ask.getA_no());

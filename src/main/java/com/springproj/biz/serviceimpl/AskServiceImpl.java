@@ -56,6 +56,11 @@ public class AskServiceImpl implements AskService {
 	public void updateService(AskVO vo) {
 		dao.updateAsk(vo);
 	}
+	
+	@Override
+	public void updateCntService(int a_no) {
+		dao.updateCnt(a_no);
+	}
 
 	@Override
 	public void deleteService(int a_no) {
@@ -66,5 +71,6 @@ public class AskServiceImpl implements AskService {
 	public List<Map<String, String>> getBrandList() {
 		return dao.getBrandList();
 	}
+
 	
 }

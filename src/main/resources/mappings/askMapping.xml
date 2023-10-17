@@ -34,6 +34,7 @@
 			 , a.a_date
 			 , decode(a.a_status, '1', '작성됨', '2', '수정됨', '3', '답변됨') as a_status
 			 , a.ar_no
+			 , a.a_cnt
 			 , u.name as name_1
 		  from ask a
 		     , users u
@@ -60,6 +61,7 @@
 			 , a.a_date
 			 , decode(a.a_status, '1', '작성됨', '2', '수정됨', '3', '답변됨') as a_status
 			 , a.ar_no
+			 , a.a_cnt
 			 , u.name as name_1
 		  from ask a
 		     , users u
@@ -89,7 +91,8 @@
 			 , a.a_pmm
 			 , a.a_date
 			 , decode(a.a_status, '1', '작성됨', '2', '수정됨', '3', '답변됨') as a_status
-			 , a.ar_no 
+			 , a.ar_no
+			 , a.a_cnt
 			 , u.name as name_1
 		  from ask a
 		  	 , users u
@@ -120,6 +123,7 @@
 			 , a.a_date
 			 , decode(a.a_status, '1', '작성됨', '2', '수정됨', '3', '답변됨') as a_status
 			 , a.ar_no
+			 , a.a_cnt
 			 , b.name as name_1
 			 , c.name as name_2
 		  from ask a
@@ -150,6 +154,7 @@
 			 , a.a_date
 			 , decode(a.a_status, '1', '작성됨', '2', '수정됨', '3', '답변됨') as a_status
 			 , a.ar_no
+			 , a.a_cnt
 			 , b.name as name_1
 			 , c.name as name_2
 		  from ask a
@@ -180,6 +185,7 @@
 			 , a.a_date
 			 , decode(a.a_status, '1', '작성됨', '2', '수정됨', '3', '답변됨') as a_status
 			 , a.ar_no
+			 , a.a_cnt
 			 , b.name as name_1
 			 , c.name as name_2
 		  from ask a
@@ -227,6 +233,7 @@
 			 , a.a_date
 			 , decode(a.a_status, '1', '작성됨', '2', '수정됨', '3', '답변됨') as a_status
 			 , a.ar_no
+			 , a.a_cnt
 			 , b.name as name_1
 			 , c.name as name_2
 		  from ask a
@@ -251,6 +258,12 @@
 	<update id="updateAsk">
 	<![CDATA[
 		update ask set a_title = #{a_title}, a_content = #{a_content}, a_status = '2' where a_no = #{a_no}
+	]]>
+	</update>
+	
+	<update id="updateCnt">
+	<![CDATA[
+		update ask set a_cnt = a_cnt + 1 where a_no = #{a_no}
 	]]>
 	</update>
 	

@@ -168,7 +168,7 @@ textarea{
 		<input id="a_title" name="a_title" type="text" value="${ask.a_title}" class="Commudetailtitle readonlyCtrl" autocomplete="off"/>
 		<hr>
 		<div class="Commudetailproperty">
-			<a>작성자 : ${ask.name_1}</a><a>ㅣ</a><a>수신자 : ${ask.name_2}</a><a>ㅣ</a><a>${ask.a_date}</a><a>ㅣ</a><a>문의 상태 : ${ask.a_status}</a>
+			<a>작성자 : ${ask.name_1}</a><a>ㅣ</a><a>수신자 : ${ask.name_2}</a><a>ㅣ</a><a>${ask.a_date}</a><a>ㅣ</a><a>문의 상태 : ${ask.a_status}ㅣ</a><a>조회수 : ${ask.a_cnt}</a>
 		</div>
 		<br>
 		

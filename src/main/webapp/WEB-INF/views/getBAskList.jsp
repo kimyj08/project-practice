@@ -130,6 +130,7 @@ td{
 					<th>답변자</th>
 					<th>등록일</th>
 					<th>문의상태</th>
+					<th>조회수</th>
 				</tr>
 			</c:if>
 			<c:if test="${role ne '관리자'}">
@@ -139,6 +140,7 @@ td{
 					<th>작성자</th>
 					<th>등록일</th>
 					<th>문의상태</th>
+					<th>조회수</th>
 				</tr>
 			</c:if>
 			<c:if test="${role eq '회원'}">
@@ -150,6 +152,7 @@ td{
 						<td align="center">${ask.name_1}</td>
 						<td align="center">${ask.a_date}</td>
 						<td align="center">${ask.a_status}</td><!-- null값일 때는 처리전, 0일 때는 수정됨, 1일 때는 답변완료(처리완료)의 조건에 따라 다르게 출력되어야 함. -->
+						<td align="center">${ask.a_cnt}</td>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -163,6 +166,7 @@ td{
 						<td align="center">${ask.name_2}</td>
 						<td align="center">${ask.a_date}</td>
 						<td align="center">${ask.a_status}</td><!-- null값일 때는 처리전, 0일 때는 수정됨, 1일 때는 답변완료(처리완료)의 조건에 따라 다르게 출력되어야 함. -->
+						<td align="center">${ask.a_cnt}</td>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -179,6 +183,7 @@ td{
 				<th>작성자</th>
 				<th>등록일</th>
 				<th>문의상태</th>
+				<th>조회수</th>
 			</tr>
 			
 			<c:forEach items="${askList}" var="ask"> <!-- items : 데이터를 레코드 단위로 반환, var : 변수 선언할 수 있는 속성 -->
@@ -190,6 +195,7 @@ td{
 						<td align="center">${ask.name_1}</td>
 						<td align="center">${ask.a_date}</td>
 						<td align="center">${ask.a_status}</td><!-- null값일 때는 처리전, 0일 때는 수정됨, 1일 때는 답변완료(처리완료)의 조건에 따라 다르게 출력되어야 함. -->
+						<td align="center">${ask.a_cnt}</td>
 					</tr>
 <%-- 					<c:set var="listCnt" value="${listCnt + 1}"></c:set> --%>
 				</c:if>
@@ -211,6 +217,7 @@ td{
 				<th>작성자</th>
 				<th>등록일</th>
 				<th>문의상태</th>
+				<th>조회수</th>
 			</tr>
 			<c:forEach items="${askList}" var="ask"> <!-- items : 데이터를 레코드 단위로 반환, var : 변수 선언할 수 있는 속성 -->
 				<c:if test="${ask.um_no ne null}">
@@ -221,6 +228,7 @@ td{
 						<td align="center">${ask.name_1}</td>
 						<td align="center">${ask.a_date}</td>
 						<td align="center">${ask.a_status}</td><!-- null값일 때는 처리전, 0일 때는 수정됨, 1일 때는 답변완료(처리완료)의 조건에 따라 다르게 출력되어야 함. -->
+						<td align="center">${ask.a_cnt}</td>
 					</tr>
 				</c:if>
 			</c:forEach>

@@ -64,6 +64,11 @@ public class AskDAOMybatis {
 		mybatis.update("Ask.updateAsk", vo);
 	}
 	
+	// 조회수 증가(update문)
+	public void updateCnt(int a_no) {
+		mybatis.update("Ask.updateCnt", a_no);
+	}
+	
 	// 글 삭제(delete문)
 	public void deleteAsk(int a_no) {
 		mybatis.update("Ask.deleteAsk", a_no);

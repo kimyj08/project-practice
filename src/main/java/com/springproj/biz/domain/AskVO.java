@@ -13,6 +13,7 @@ public class AskVO {
 	private Date a_date;
 	private String a_status;
 	private int ar_no;
+	private int a_cnt;
 	private String name_1;
 	private String name_2;
 	
@@ -73,6 +74,12 @@ public class AskVO {
 	public void setAr_no(int ar_no) {
 		this.ar_no = ar_no;
 	}
+	public int getA_cnt() {
+		return a_cnt;
+	}
+	public void setA_cnt(int a_cnt) {
+		this.a_cnt = a_cnt;
+	}
 	public String getName_1() {
 		return name_1;
 	}
@@ -102,8 +109,8 @@ public class AskVO {
 	public String toString() {
 		return "AskVO [a_no=" + a_no + ", a_title=" + a_title + ", a_content=" + a_content + ", um_no=" + um_no
 				+ ", bm_no=" + bm_no + ", a_pmm=" + a_pmm + ", a_date=" + a_date + ", a_status=" + a_status + ", ar_no="
-				+ ar_no + ", name_1=" + name_1 + ", name_2=" + name_2 + ", searchCondition=" + searchCondition
-				+ ", searchKeyword=" + searchKeyword + "]";
+				+ ar_no + ", a_cnt=" + a_cnt + ", name_1=" + name_1 + ", name_2=" + name_2 + ", searchCondition="
+				+ searchCondition + ", searchKeyword=" + searchKeyword + "]";
 	}
 
 }

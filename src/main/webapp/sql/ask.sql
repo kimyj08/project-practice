@@ -303,6 +303,8 @@ ALTER TABLE ask
 		CONSTRAINT FK_brandMember_TO_ask
 		CASCADE;
 
+ALTER TABLE ask ADD a_cnt NUMBER(3) DEFAULT 0;
+		
 /*
 UPDATE ask SET a_status = '1' where a_status is null;
 select * from ask where a_status not in ('1', '0');
