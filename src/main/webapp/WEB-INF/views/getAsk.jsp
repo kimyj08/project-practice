@@ -180,7 +180,7 @@ textarea{
 	</form>
 	<!-- 수정버튼 넣고 페이지 이동 -->
 	<div id="btnsDiv">
-		<c:if test="${role ne '관리자' && ask.a_pmm ne null}">
+		<c:if test="${role ne '관리자'}">
 			<button class="updatebu" onclick="checkAskValue()">글 수정</button>
 			<a  class="deletebu" href="deleteAsk.zo?a_no=${ask.a_no}">글 삭제</a>
 		</c:if>
